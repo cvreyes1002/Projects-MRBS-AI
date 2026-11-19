@@ -21,6 +21,18 @@ class UserViewSet(viewsets.ModelViewSet):
             return [permissions.AllowAny()]
         return [permissions.IsAuthenticated()]
 
+    def create(self, request, *args, **kwargs):
+        data = request.data.copy()
+        # Only existing admins can create a user directly as an admin
+        if not (request.user.is_authenticated and getattr(request.user, 'is_admin', False)):
+            data['is_admin'] = False
+
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
     def update(self, request, *args, **kwargs):
         # Only admins can change user roles
         if not request.user.is_admin:

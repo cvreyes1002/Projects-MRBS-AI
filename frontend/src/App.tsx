@@ -205,7 +205,7 @@ export default function App() {
                   onChange={(e) => setAuthData({ ...authData, password: e.target.value })}
                 />
               </div>
-              {isRegistering && (
+              {/* {isRegistering && (
                 <div className="flex items-center gap-2">
                   <input
                     type="checkbox"
@@ -216,7 +216,7 @@ export default function App() {
                   />
                   <label htmlFor="isAdmin" className="text-sm text-gray-700">Register as Admin</label>
                 </div>
-              )}
+              )} */}
               <button
                 type="submit"
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg transition-colors"
